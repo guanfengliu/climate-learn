@@ -171,28 +171,28 @@ class PrecipNet(nn.Module):
 class AFNONet(nn.Module):
     def __init__(
             self,
-            params,
+            #params,
             img_size=(720, 1440),
             patch_size=(16, 16),
-            in_chans=2,
-            out_chans=2,
+            in_channels=2,
+            out_channels=2,
             embed_dim=768,
             depth=12,
             mlp_ratio=4.,
             drop_rate=0.,
             drop_path_rate=0.,
-            num_blocks=16,
+            n_blocks=16,
             sparsity_threshold=0.01,
             hard_thresholding_fraction=1.0,
         ):
         super().__init__()
-        self.params = params
+        #self.params = params
         self.img_size = img_size
-        self.patch_size = (params.patch_size, params.patch_size)
-        self.in_chans = params.N_in_channels
-        self.out_chans = params.N_out_channels
+        self.patch_size = (patch_size, patch_size)
+        self.in_chans = in_channels #params.N_in_channels
+        self.out_chans = out_channels  #params.N_out_channels
         self.num_features = self.embed_dim = embed_dim
-        self.num_blocks = params.num_blocks 
+        self.num_blocks = n_blocks #params.num_blocks 
         norm_layer = partial(nn.LayerNorm, eps=1e-6)
 
         self.patch_embed = PatchEmbed(img_size=img_size, patch_size=self.patch_size, in_chans=self.in_chans, embed_dim=embed_dim)
