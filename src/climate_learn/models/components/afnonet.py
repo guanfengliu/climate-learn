@@ -243,7 +243,7 @@ class AFNONet(nn.Module):
 
         return x
 
-    def forward(self, x):
+    def predict(self, x):
         x = self.forward_features(x)
         x = self.head(x)
         x = rearrange(
@@ -255,6 +255,29 @@ class AFNONet(nn.Module):
             w=self.img_size[1] // self.patch_size[1],
         )
         return x
+    
+
+    def forward(
+        self, x: torch.Tensor, y: torch.Tensor, out_variables, metric, lat, log_postfix
+    ):
+        # B, C, H, W
+        pred = self.predict(x)
+        return (
+            [
+                m(pred, y, out_variables, lat=lat, log_postfix=log_postfix)
+                for m in metric
+            ],
+            x,
+        )
+
+    def evaluate(
+        self, x, y, variables, out_variables, transform, metrics, lat, clim, log_postfix
+    ):
+        pred = self.predict(x)
+        return [
+            m(pred, y, transform, out_variables, lat, clim, log_postfix)
+            for m in metrics
+        ], pred
 
 
 class PatchEmbed(nn.Module):
