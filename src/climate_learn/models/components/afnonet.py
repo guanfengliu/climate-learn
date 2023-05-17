@@ -188,7 +188,7 @@ class AFNONet(nn.Module):
         super().__init__()
         #self.params = params
         self.img_size = img_size
-        self.patch_size = (patch_size, patch_size)
+        self.patch_size = patch_size
         self.in_chans = in_channels #params.N_in_channels
         self.out_chans = out_channels  #params.N_out_channels
         self.num_features = self.embed_dim = embed_dim
