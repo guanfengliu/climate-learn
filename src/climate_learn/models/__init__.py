@@ -13,6 +13,8 @@ def load_model(name, task, model_kwargs, optim_kwargs):
         model_cls = ResNet
     elif name == "unet":
         model_cls = Unet
+    elif name == "afnonet":
+        model_cls = AFNONet
 
     model = model_cls(**model_kwargs)
 
